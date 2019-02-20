@@ -1,0 +1,390 @@
+
+<style>
+.container {
+   height: 100%;
+   overflow: hidden;
+}
+
+.right {
+    width: 600px;
+   height: 100%;
+    float: right;
+    background: #aafed6;
+	font-family: Verdana;
+	font-size: 12px;
+	overflow:scroll;
+}
+
+.left {
+    float: none; /* not needed, just for clarification */
+   height: 100%;
+    background: #e8f6fe;
+    /* the next props are meant to keep this block independent from the other floated one */
+    width: auto;
+    overflow: hidden;
+}
+
+.journal {
+	display: block;	float:left; clear: none; width: 190px; height:18px; font-size:12px; overflow: hidden;
+}
+
+.searchterms {
+	display: block;	float:left; clear: none; width: 290px; height:18px; font-size:12px; overflow: hidden;
+}
+
+.pubmed {
+    width: 100%;
+    height: 100%;
+}
+
+.button {
+    display: block; float: left;
+    width: 80px;
+    height: 14px;
+    background: #4292f4;
+    padding: 5px;
+    text-align: center;
+    border-radius: 2px;
+	margin-right: 2px;
+    color: white;
+    font-weight: bold;
+}
+
+.buttonsep {
+    display: block; float: left;
+    width: 80px;
+    height: 14px;
+    padding: 5px;
+    text-align: center;
+	margin-right: 2px;
+    font-weight: bold;
+}
+
+</style>
+
+<script>
+        
+    function searchStringPubmed() {
+        var arrChecks = document.getElementsByName("theCheckbox");
+        var searchTerms = document.getElementsByName("theSearchTerms");
+        var searchphrase = document.getElementById("SearchString").value;
+		
+		var ss = "";
+		var journalphrase = "";
+		var searchtermphrase = "";
+		var yearphrase = ""
+		
+		andterm=""
+        for (i = 0; i < searchTerms.length; i++)        {
+            if (searchTerms[i].checked) {
+                searchtermphrase = searchtermphrase + andterm + searchTerms[i].getAttribute('value') ;
+				andterm = "%20AND%20";
+            }
+        }
+		orterm=""
+        for (i = 0; i < arrChecks.length; i++)         {
+            if (arrChecks[i].checked) {
+                journalphrase = journalphrase + orterm + "%22" + arrChecks[i].getAttribute('value') + "%22[jour]";
+				orterm = "%20OR%20";
+            }
+        }
+		if (document.getElementById("YearFm").value.length > 1) yearphrase = document.getElementById("YearFm").value; 
+		if ( document.getElementById("YearTo").value.length > 1 ) yearphrase = yearphrase + ":" + document.getElementById("YearTo").value;
+		
+		// alert(journalphrase);
+        if (searchphrase.length > 2) { ss = searchphrase; }
+		
+		if (searchtermphrase.length > 0) {
+			if ( ss.length > 0 ) ss = ss + "%20AND%20" + searchtermphrase; 
+			else ss = searchtermphrase;
+		}
+		
+		if (journalphrase.length > 0) {
+			if ( ss.length > 0 ) ss = ss + "%20AND%20(" + journalphrase +")";
+			else ss = journalphrase;
+		}
+		
+		if (yearphrase.length > 0) {
+			if ( ss.length > 0 ) ss = ss + "%20AND%20(" + yearphrase +"[dp])";
+			else ss = yearphrase + "[dp]";
+		}
+		
+		ss="https://www.ncbi.nlm.nih.gov/pubmed/?term=" + ss
+		
+        return(ss);
+    }
+	
+    function searchStringGoogle() {
+        var arrChecks = document.getElementsByName("theCheckbox");
+        var searchTerms = document.getElementsByName("theSearchTerms");
+        var searchphrase = document.getElementById("SearchString").value;
+		
+		var ss = "";
+		var journalphrase = "";
+		var searchtermphrase = "";
+		var yearphrase = ""
+		
+		andterm=""
+        for (i = 0; i < searchTerms.length; i++)        {
+            if (searchTerms[i].checked) {
+                searchtermphrase = searchtermphrase + andterm + searchTerms[i].getAttribute('value') ;
+				andterm = "%20AND%20";
+            }
+        }
+		orterm=""
+		andterm="%20AND%20("
+        for (i = 0; i < arrChecks.length; i++)         {
+            if (arrChecks[i].checked) {
+                journalphrase = journalphrase + orterm + "source:%22" + arrChecks[i].getAttribute('value') + "%22";
+				orterm = "%20OR%20";
+				andterm = "";
+            }
+        }
+		ylo=""; yhi="";
+		if (document.getElementById("YearFm").value.length > 1) ylo = "&as_ylo="+document.getElementById("YearFm").value;
+		if (document.getElementById("YearTo").value.length > 1) yhi = "&as_yhi="+document.getElementById("YearTo").value;
+		
+        if (searchphrase.length > 2) { ss = searchphrase; }
+		
+		if (searchtermphrase.length > 0) {
+			if ( ss.length > 0 ) ss = ss + "%20AND%20" + searchtermphrase; 
+			else ss = searchtermphrase;
+		}
+
+		ss="https://scholar.google.com.hk/scholar?as_q=" + ss + "%20" + journalphrase + ylo + yhi + "&hl=en&as_sdt=0%2C5";
+		
+        return(ss);
+    }
+    
+	function searchString() {
+		if (document.getElementById("google").checked) return(searchStringGoogle());
+		else return(searchStringPubmed());
+	}
+	
+    function searchInNewWindow() {
+        ss=searchString();
+        window.open(ss,'PubMedSearch','width=1400,height=978,left=0');
+    }
+	
+	function updatePubmedURL() {
+		document.getElementById("google").checked = false;
+		document.getElementById("pubmedurl").href = searchString();
+	}
+
+	function updateGoogleURL() {
+		document.getElementById("google").checked = true;
+		document.getElementById("googleurl").href = searchString();
+	}
+
+    function googleInFrame() {
+		document.getElementById("google").checked = true;
+        document.getElementById("pubmed").src = searchString();
+    }
+	
+    function pubmedInFrame() {
+		document.getElementById("google").checked = false;
+        document.getElementById("pubmed").src = searchString();
+    }
+	
+    function searchOne(s) {
+        var ss = document.getElementById("SearchString").value;
+        var searchTerms = document.getElementsByName("theSearchTerms");
+		
+		if (document.getElementById("google").checked) {
+			for (i = 0; i < searchTerms.length; i++) {
+				if (searchTerms[i].checked) ss = ss + "%20AND%20" + searchTerms[i].getAttribute('value') ;
+			}
+			ylo=""; yhi="";
+			if (document.getElementById("YearFm").value.length > 1) ylo = "&as_ylo="+document.getElementById("YearFm").value;
+			if (document.getElementById("YearTo").value.length > 1) yhi = "&as_yhi="+document.getElementById("YearTo").value;
+			ss="https://scholar.google.com.hk/scholar?as_q=" + ss + "&as_publication=%22" + s.id +"%22" + ylo + yhi + "&hl=en&as_sdt=0%2C5";
+		}
+		else {
+			if (ss.length < 1)  ss = "https://www.ncbi.nlm.nih.gov/pubmed/?term=";
+			else ss = "https://www.ncbi.nlm.nih.gov/pubmed/?term=" + ss + "%20AND%20";
+			for (i = 0; i < searchTerms.length; i++) {
+				if (searchTerms[i].checked) ss = ss + searchTerms[i].getAttribute('value') + "%20AND%20";
+			}
+			ss = ss + "(%22" + s.id + "%22[jour])";
+		}
+		
+		if ( document.getElementById("inframe").checked ) {
+			document.getElementById("pubmed").src = ss;
+			return false;
+		} else {
+			s.target="search";
+			s.href = ss;
+		}
+    }
+
+    function makeJournalCheckboxes(str) {
+        var a = document.getElementById("journals");
+        var arr = str;
+        var returnStr = "";
+        for (i = 0; i < arr.length; i++) returnStr += '<div class="journal" ><input type="checkbox" name="theCheckbox" value="' + arr[i] + '" />' + '<a href="#" id="'+arr[i]+'" onclick="return searchOne(this);return false;">' + arr[i] + '</a> </div>';
+        a.innerHTML = returnStr;
+    }
+
+    function makeSearchTermCheckboxes(str) {
+        var a = document.getElementById("searchterms");
+        var arr = str;
+        var returnStr = "";
+        for (i = 0; i < arr.length; i++) returnStr += '<div class="searchterms"> <input type="checkbox" name="theSearchTerms" value="' + arr[i].replace(/"/g, '%22') + '" />' + arr[i] + '</a> </div>';
+        a.innerHTML = returnStr;
+    }
+
+    function loadIF20() {
+        var arrt = ["LANCET","JAMA","Nature","Science","Nat Rev Neurosci","Nat Med","World Psychiatry","Lancet Neurol","Psychol Inq","Physiol Rev","Br Med J","Annu Rev Psychol","J Stat Softw","Psychol Sci Public Interest"];
+        makeJournalCheckboxes(arrt);
+        document.getElementById("SearchString").focus();
+    };
+
+    function loadIF10() {
+        var arrt = ["LANCET","JAMA","Nature","Science","Nat Rev Neurosci","Nat Med","World Psychiatry","Lancet Neurol","Psychol Inq","Physiol Rev","Br Med J","Annu Rev Psychol","J Stat Softw","Psychol Sci Public Interest",
+		"Nat Neurosci","Nat Rev Neurol","Sci Transl Med","JAMA Psychiatry","Trends Cogn Sci","Lancet Psychiatry","Behav Brain Sci","Annu Rev Med","Annu Rev Neurosci","Annu Rev Physiol","Neuron","Prog Neurobiol","Am J Psychiatry","Annu Rev Clin Psychol","Psychol Bull","nat commun","Biol Psychiatry","Mol Psychiatry","JAMA Neurol","Trends Neurosci","Brain","JAMA Pediatr","Trends Endocrinol Metab","Trends Genet","Ann Neurol"];
+        makeJournalCheckboxes(arrt);
+        document.getElementById("SearchString").focus();
+    };
+
+    function loadIF1020() {
+        var arrt = ["Nat Neurosci","Nat Rev Neurol","Sci Transl Med","JAMA Psychiatry","Trends Cogn Sci","Lancet Psychiatry","Behav Brain Sci","Annu Rev Med","Annu Rev Neurosci","Annu Rev Physiol","Neuron","Prog Neurobiol","Am J Psychiatry","Annu Rev Clin Psychol","Psychol Bull","nat commun","Biol Psychiatry","Mol Psychiatry","JAMA Neurol","Trends Neurosci","Brain","JAMA Pediatr","Trends Endocrinol Metab","Trends Genet","Ann Neurol"];
+        makeJournalCheckboxes(arrt);
+        document.getElementById("SearchString").focus();
+    };
+	
+	function loadIF07() {
+        var arrt = ["LANCET","JAMA","Nature","Science","Nat Rev Neurosci","Nat Med","World Psychiatry","Lancet Neurol","Psychol Inq","Physiol Rev","Br Med J","Annu Rev Psychol","J Stat Softw","Psychol Sci Public Interest",
+		"Nat Neurosci","Nat Rev Neurol","Sci Transl Med","JAMA Psychiatry","Trends Cogn Sci","Lancet Psychiatry","Behav Brain Sci","Annu Rev Med","Annu Rev Neurosci","Annu Rev Physiol","Neuron","Prog Neurobiol","Am J Psychiatry","Annu Rev Clin Psychol","Psychol Bull","nat commun","Biol Psychiatry","Mol Psychiatry","JAMA Neurol","Trends Neurosci","Brain","JAMA Pediatr","Trends Endocrinol Metab","Trends Genet","Ann Neurol",
+		"Clin Psychol Rev","Proc Natl Acad Sci U S A","Neuro Oncol","Epilepsy Curr","Perspect Psychol Sci","Pers Soc Psychol Rev","Curr Biol","PLoS Biol","BMC Med","Ageing Res Rev","Adv Exp Soc Psychol","Annu Rev Biomed Eng","Health Psychol Rev","Mov Disord","Transl Stroke Res","Rev Educ Res","Neurosci Biobehav Rev","Cell Rep","Aging Cell","eLife","Neurology","NEUROSCIENTIST","Gigascience","Psychol Rev","J Neurol Neurosurg Psychiatry","Eur J Epidemiol"];
+        makeJournalCheckboxes(arrt);
+        document.getElementById("SearchString").focus();
+    };
+
+	function loadIF0710() {
+        var arrt = ["Clin Psychol Rev","Proc Natl Acad Sci U S A","Neuro Oncol","Epilepsy Curr","Perspect Psychol Sci","Pers Soc Psychol Rev","Curr Biol","PLoS Biol","BMC Med","Ageing Res Rev","Adv Exp Soc Psychol","Annu Rev Biomed Eng","Health Psychol Rev","Mov Disord","Transl Stroke Res","Rev Educ Res","Neurosci Biobehav Rev","Cell Rep","Aging Cell","eLife","Neurology","NEUROSCIENTIST","Gigascience","Psychol Rev","J Neurol Neurosurg Psychiatry","Eur J Epidemiol"];
+        makeJournalCheckboxes(arrt);
+        document.getElementById("SearchString").focus();
+    };
+
+	function loadIF0507() {
+        var arrt = ["Schizophr Bull","Neuropsychopharmacology","Curr Opin Neurobiol","J Child Psychol Psychiatry","Psychol Methods","Mol Neurodegener","Cereb Cortex","Psychiatry","Stroke","Brain Pathol","Psychol Sci","Brain Stimul","Neuropathol Appl Neurobiol","Prog Nucl Magn Reson Spectrosc","J Neurosci","Mol Autism","Transl Neurodegener","Br J Psychiatry","J Pers Soc Psychol","Neurotherapeutics","Epidemiol Pschiatr Sci","Philos Trans R Soc Lond B Biol Sci","Addict Biol","Pain","Pediatrics","Psychol Med","Neuroimage","Acta Neuropathol Commun","Development","Epigenetics Chromatin","Sci Data","Mult Scler","Neurobiol Dis","Clin Sci (Lond)","J Psychiatry Neurosci","Aging","Annu Rev Vis Sci","Sleep","Aust N Z J Psychiatry","Mol Neurobiol","Aging Dis","Alzheimers Res Ther","J Clin Child Adolesc Psychol","J Neurotrauma"];
+        makeJournalCheckboxes(arrt);
+        document.getElementById("SearchString").focus();
+    };
+	
+	function loadIF05() {
+        var arrt = ["LANCET","JAMA","Nature","Science","Nat Rev Neurosci","Nat Med","World Psychiatry","Lancet Neurol","Psychol Inq","Physiol Rev","Br Med J","Annu Rev Psychol","J Stat Softw","Psychol Sci Public Interest",
+		"Nat Neurosci","Nat Rev Neurol","Sci Transl Med","JAMA Psychiatry","Trends Cogn Sci","Lancet Psychiatry","Behav Brain Sci","Annu Rev Med","Annu Rev Neurosci","Annu Rev Physiol","Neuron","Prog Neurobiol","Am J Psychiatry","Annu Rev Clin Psychol","Psychol Bull","nat commun","Biol Psychiatry","Mol Psychiatry","JAMA Neurol","Trends Neurosci","Brain","JAMA Pediatr","Trends Endocrinol Metab","Trends Genet","Ann Neurol",
+		"Clin Psychol Rev","Proc Natl Acad Sci U S A","Neuro Oncol","Epilepsy Curr","Perspect Psychol Sci","Pers Soc Psychol Rev","Curr Biol","PLoS Biol","BMC Med","Ageing Res Rev","Adv Exp Soc Psychol","Annu Rev Biomed Eng","Health Psychol Rev","Mov Disord","Transl Stroke Res","Rev Educ Res","Neurosci Biobehav Rev","Cell Rep","Aging Cell","eLife","Neurology","NEUROSCIENTIST","Gigascience","Psychol Rev","J Neurol Neurosurg Psychiatry","Eur J Epidemiol",
+		"Schizophr Bull","Neuropsychopharmacology","Curr Opin Neurobiol","J Child Psychol Psychiatry","Psychol Methods","Mol Neurodegener","Cereb Cortex","Psychiatry","Stroke","Brain Pathol","Psychol Sci","Brain Stimul","Neuropathol Appl Neurobiol","Prog Nucl Magn Reson Spectrosc","J Neurosci","Mol Autism","Transl Neurodegener","Br J Psychiatry","J Pers Soc Psychol","Neurotherapeutics","Epidemiol Pschiatr Sci","Philos Trans R Soc Lond B Biol Sci","Addict Biol","Pain","Pediatrics","Psychol Med","Neuroimage","Acta Neuropathol Commun","Development","Epigenetics Chromatin","Sci Data","Mult Scler","Neurobiol Dis","Clin Sci (Lond)","J Psychiatry Neurosci","Aging","Annu Rev Vis Sci","Sleep","Aust N Z J Psychiatry","Mol Neurobiol","Aging Dis","Alzheimers Res Ther","J Clin Child Adolesc Psychol","J Neurotrauma"];
+        makeJournalCheckboxes(arrt);
+        document.getElementById("SearchString").focus();
+    };
+	
+	function checkall() {
+		var arrChecks = document.getElementsByName("theCheckbox");
+		for (i = 0; i < arrChecks.length; i++) arrChecks[i].checked = true;
+	}
+
+	function checknone() {
+		var arrChecks = document.getElementsByName("theCheckbox");
+		for (i = 0; i < arrChecks.length; i++) arrChecks[i].checked = false;
+	}
+
+	function year5() {
+		var d = new Date();
+		var n = d.getFullYear();
+		document.getElementById("YearTo").value=n;
+		document.getElementById("YearFm").value=n-5;
+	}
+
+	function year10() {
+		var d = new Date();
+		var n = d.getFullYear();
+		document.getElementById("YearTo").value=n;
+		document.getElementById("YearFm").value=n-10;
+	}
+
+	function yearminus5() {
+		var d = new Date();
+		var n = d.getFullYear();
+		document.getElementById("YearTo").value=document.getElementById("YearTo").value-5;
+		document.getElementById("YearFm").value=document.getElementById("YearFm").value-5;
+	}
+
+	function yearclear() {
+		document.getElementById("YearTo").value="";
+		document.getElementById("YearFm").value="";
+	}
+
+
+    window.onload = function () {
+        var jarr = ["LANCET","JAMA","Nature","Science","Nat Rev Neurosci","Nat Med","World Psychiatry","Lancet Neurol","Psychol Inq","Physiol Rev","Br Med J","Annu Rev Psychol","J Stat Softw","Psychol Sci Public Interest"];
+        makeJournalCheckboxes(jarr);
+		
+		// Topic, Acquisition (EEG/MRI/fNIRS), Offline Measures, Online Task, Data Analysis (Lasso, MVPA, Graph, Tensorflow), Substrates
+        var sarr = ['("processing speed")', '("reaction time" OR "response time")', '(faster OR slower OR shorter OR longer OR reduced OR increased OR speed OR decreased)', 
+					'("stimulus-response compatibility" OR "choice RT" OR "choice reaction time")', '("digit-symbol" OR "digit symbol" OR "symbol digit" OR "DSST" OR "DSVT" OR "SDMT")', '("substitution test" OR "substitution task")',
+					'(aging OR older OR ageing OR elderly)', 
+					'(fMRI OR "functional imaging" OR "functional MRI")', '(activation)', 
+					'(associated OR correlated OR "neural correlates")',
+					'(residual)', '(Cerebellum)', '(vermis)', '(stroke OR poststroke)', '(resilience)', '(stress)'];
+		//  AND (fMRI OR "functional MRI") AND  AND 
+        makeSearchTermCheckboxes(sarr);
+
+        document.getElementById("SearchString").focus();
+    };
+
+
+</script>
+
+<body style="border:0px;margin:0px">
+
+    <div class="container">
+        <div class="right">
+            <input id="SearchString" style="width:100%" type="text" /> 
+			From: <input id="YearFm" type="text" style="width:40px" /> To: <input id="YearTo" type="text" style="width:40px" /> 
+			<button onclick="year5()">5yrs</button>
+			<button onclick="year10()">10yrs</button>
+			<button onclick="yearminus5()">-5yrs</button>
+			<button onclick="yearclear()">clear</button>
+			<input type="checkbox" id="google" />Search Google
+			<input type="checkbox" id="inframe" />Frame
+            <div id="searchterms"></div>
+			<div style="clear:both"> 
+				IF:
+				<button onclick="loadIF20()">20+</button>
+				<button onclick="loadIF10()">10+</button>
+				<button onclick="loadIF07()">7+</button>
+				<button onclick="loadIF05()">5+</button>
+				<button onclick="loadIF1020()">10-20</button>
+				<button onclick="loadIF0710()">7-10</button>
+				<button onclick="loadIF0507()">5-7</button>
+				Selection: 
+				<button onclick="checkall()">All</button>
+				<button onclick="checknone()">None</button>
+			</div>
+            <div id="journals"></div>
+			<br>
+			<div style="clear:both">
+				
+				<!-- button onclick="searchInNewWindow()">Search in New Window</button -->
+				<!-- button onclick="searchInFrame()">Search in Frame</button -->
+				<a id="pubmedurl" class="button" href="" target="search" onclick="updatePubmedURL();"> Pubmed </a>
+				<a id="googleurl" class="button" href="" target="search" onclick="updateGoogleURL();"> Google </a>
+				<span class="buttonsep"> In Frame: </span>
+				<a href="#" class="button" onclick="googleInFrame()"> [Google] </button>
+				<a href="#" class="button" onclick="pubmedInFrame()"> [Pubmed] </button>
+				<!-- button onclick="googleInFrame()"> Google </button>
+				<button onclick="pubmedInFrame()"> Pubmed </button -->
+				<a class="buttonsep" href="https://www.scimagojr.com/journalrank.php"> JCR/IF </a>
+				
+			</div>
+			
+			<a href="https://scholar.google.com.hk/scholar?as_q=Cerebellum&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=Nature&as_ylo=2008&as_yhi=2010&hl=en&as_sdt=0%2C5">
+        </div>
+        <div class="left">
+            <iframe id="pubmed" class="pubmed" src="about:blank"></iframe>
+        </div>
+    </div>
+</body>
