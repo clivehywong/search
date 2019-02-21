@@ -323,7 +323,6 @@
 		rawFile.open("GET", file, false);
 		rawFile.onreadystatechange = function () {
 		    if(rawFile.readyState == 4)  {
-                alert(rawFile.status);
                 if(rawFile.status == 200 || rawFile.status == 0) {
                     var allText = rawFile.responseText;
                     alert(allText);
@@ -331,9 +330,9 @@
                 }
 		    }
 		}
-		alert("hey1");
+		alert("hey11");
 		rawFile.send(null);
-		alert("hey2");
+		alert("hey21");
 		return outstr;
 	}
 
@@ -350,7 +349,7 @@
 					'(residual)', '(Cerebellum)', '(vermis)', '(stroke OR poststroke)', '(resilience)', '(stress)'];
 
 	// makeSearchTermCheckboxes(sarr);
-	makeSearchTermCheckboxes(loadterm("./term.txt"));
+	makeSearchTermCheckboxes(loadterm("./terms.txt"));
 	    
 
 	document.getElementById("SearchString").focus();
