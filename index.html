@@ -331,7 +331,7 @@
 		}
 		rawFile.send(null);
         
-		return outstr.filter(function(e1){ return e1==""; });
+		return outstr.filter(function(e1){ return ! /^[# ]/.test(e1); });
 	}
 
     window.onload = function () {
