@@ -319,20 +319,22 @@
 	
 	function loadterm(file){
 		var rawFile = new XMLHttpRequest();
+        var outstr;
 		rawFile.open("GET", file, false);
 		rawFile.onreadystatechange = function () {
-            alert(rawFile.readyState);
-		    if(rawFile.readyState === 4)  {
-                if(rawFile.status === 200 || rawFile.status == 0) {
+		    if(rawFile.readyState == 4)  {
+                alert(rawFile.status);
+                if(rawFile.status == 200 || rawFile.status == 0) {
                     var allText = rawFile.responseText;
                     alert(allText);
+                    outstr=allText.split(/\n/);
                 }
 		    }
 		}
-		alert("hey");
+		alert("hey1");
 		rawFile.send(null);
-		alert("hey");
-		return allText.split(/\n/);
+		alert("hey2");
+		return outstr;
 	}
 
     window.onload = function () {
