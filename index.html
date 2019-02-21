@@ -319,7 +319,9 @@
 	
 	function loadterm(file){
 		var rawFile = new XMLHttpRequest();
+		alert("hey");
 		rawFile.open("GET", file, false);
+		alert("hey");
 		rawFile.onreadystatechange = function () {
 		    if(rawFile.readyState === 4)  {
 			if(rawFile.status === 200 || rawFile.status == 0) {
