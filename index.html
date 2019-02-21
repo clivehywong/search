@@ -316,24 +316,40 @@
 		document.getElementById("YearTo").value="";
 		document.getElementById("YearFm").value="";
 	}
-
+	
+	function loadterm(file){
+		var rawFile = new XMLHttpRequest();
+		rawFile.open("GET", file, false);
+		rawFile.onreadystatechange = function () {
+		    if(rawFile.readyState === 4)  {
+			if(rawFile.status === 200 || rawFile.status == 0) {
+			    var allText = rawFile.responseText;
+			    alert(allText);
+			}
+		    }
+		}
+		rawFile.send(null);
+		return allText.split(/\n/);
+	}
 
     window.onload = function () {
-        var jarr = ["LANCET","JAMA","Nature","Science","Nat Rev Neurosci","Nat Med","World Psychiatry","Lancet Neurol","Psychol Inq","Physiol Rev","Br Med J","Annu Rev Psychol","J Stat Softw","Psychol Sci Public Interest"];
-        makeJournalCheckboxes(jarr);
-		
-		// Topic, Acquisition (EEG/MRI/fNIRS), Offline Measures, Online Task, Data Analysis (Lasso, MVPA, Graph, Tensorflow), Substrates
-        var sarr = ['("processing speed")', '("reaction time" OR "response time")', '(faster OR slower OR shorter OR longer OR reduced OR increased OR speed OR decreased)', 
+	var jarr = ["LANCET","JAMA","Nature","Science","Nat Rev Neurosci","Nat Med","World Psychiatry","Lancet Neurol","Psychol Inq","Physiol Rev","Br Med J","Annu Rev Psychol","J Stat Softw","Psychol Sci Public Interest"];
+	makeJournalCheckboxes(jarr);
+
+	// Topic, Acquisition (EEG/MRI/fNIRS), Offline Measures, Online Task, Data Analysis (Lasso, MVPA, Graph, Tensorflow), Substrates
+	var sarr = ['("processing speed")', '("reaction time" OR "response time")', '(faster OR slower OR shorter OR longer OR reduced OR increased OR speed OR decreased)', 
 					'("stimulus-response compatibility" OR "choice RT" OR "choice reaction time")', '("digit-symbol" OR "digit symbol" OR "symbol digit" OR "DSST" OR "DSVT" OR "SDMT")', '("substitution test" OR "substitution task")',
 					'(aging OR older OR ageing OR elderly)', 
 					'(fMRI OR "functional imaging" OR "functional MRI")', '(activation)', 
 					'(associated OR correlated OR "neural correlates")',
 					'(residual)', '(Cerebellum)', '(vermis)', '(stroke OR poststroke)', '(resilience)', '(stress)'];
-		//  AND (fMRI OR "functional MRI") AND  AND 
-        makeSearchTermCheckboxes(sarr);
 
-        document.getElementById("SearchString").focus();
-    };
+	// makeSearchTermCheckboxes(sarr);
+	makeSearchTermCheckboxes(loadterm("term.txt"));
+	    
+
+	document.getElementById("SearchString").focus();
+	};
 
 
 </script>
