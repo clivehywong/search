@@ -318,11 +318,8 @@
 	}
 	
 	function loadterm(file){
-		alert("hey");
 		var rawFile = new XMLHttpRequest();
-		alert("hey");
 		rawFile.open("GET", file, false);
-		alert("hey");
 		rawFile.onreadystatechange = function () {
             alert(rawFile.readyState);
 		    if(rawFile.readyState === 4)  {
@@ -332,7 +329,9 @@
                 }
 		    }
 		}
+		alert("hey");
 		rawFile.send(null);
+		alert("hey");
 		return allText.split(/\n/);
 	}
 
