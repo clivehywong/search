@@ -124,34 +124,35 @@
 		var searchtermphrase = "";
 		var yearphrase = ""
 		
-		andterm=""
         for (i = 0; i < searchTerms.length; i++)        {
             if (searchTerms[i].checked) {
-                searchtermphrase = searchtermphrase + andterm + searchTerms[i].getAttribute('value') ;
-				andterm = "%20AND%20";
+                if (searchtermphrase.length > 0) searchtermphrase = searchtermphrase + " AND " + searchTerms[i].getAttribute('value') ;
+                else searchtermphrase = searchTerms[i].getAttribute('value');
             }
         }
-		orterm=""
-		andterm="%20AND%20("
+        
+        if (searchtermphrase.length > 0) {
+            if (searchphrase.length > 0 ) searchphrase = searchphrase + " AND " + searchtermphrase;
+            else searchphrase = searchtermphrase;
+        }
+
         for (i = 0; i < arrChecks.length; i++)         {
             if (arrChecks[i].checked) {
-                journalphrase = journalphrase + orterm + "source:%22" + arrChecks[i].getAttribute('value') + "%22";
-				orterm = "%20OR%20";
-				andterm = "";
+                if (journalphrase.length > 0) journalphrase = journalphrase + " OR source:%22" + arrChecks[i].getAttribute('value') + "%22";
+                else journalphrase = "source:%22" + arrChecks[i].getAttribute('value') + "%22";
             }
         }
+        
+        if ( journalphrase.length > 0 ) {
+            journalphrase = "(" + journalphrase + ")";
+            if (searchphrase.length > 0) searchphrase = searchphrase + " AND " + journalphrase;
+        }
+        
 		ylo=""; yhi="";
 		if (document.getElementById("YearFm").value.length > 1) ylo = "&as_ylo="+document.getElementById("YearFm").value;
 		if (document.getElementById("YearTo").value.length > 1) yhi = "&as_yhi="+document.getElementById("YearTo").value;
 		
-        if (searchphrase.length > 2) { ss = searchphrase; }
-		
-		if (searchtermphrase.length > 0) {
-			if ( ss.length > 0 ) ss = ss + "%20AND%20" + searchtermphrase; 
-			else ss = searchtermphrase;
-		}
-
-		ss="https://scholar.google.com.hk/scholar?as_q=" + ss + "%20" + journalphrase + ylo + yhi + "&hl=en&as_sdt=0%2C5";
+		ss="https://scholar.google.com.hk/scholar?as_q=" + searchphrase + ylo + yhi + "&hl=en&as_sdt=0%2C5";
 		
         return(ss);
     }
