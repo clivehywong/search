@@ -198,7 +198,7 @@
 			ylo=""; yhi="";
 			if (document.getElementById("YearFm").value.length > 1) ylo = "&as_ylo="+document.getElementById("YearFm").value;
 			if (document.getElementById("YearTo").value.length > 1) yhi = "&as_yhi="+document.getElementById("YearTo").value;
-			ss="https://scholar.google.com.hk/scholar?as_q=" + ss + "AND source:%22" + s.id +"%22" + ylo + yhi + "&hl=en&as_sdt=0%2C5";
+			ss="https://scholar.google.com.hk/scholar?as_q=" + ss + " AND source:%22" + s.id +"%22" + ylo + yhi + "&hl=en&as_sdt=0%2C5";
 		}
 		else {
 			if (ss.length < 1)  ss = "https://www.ncbi.nlm.nih.gov/pubmed/?term=";
