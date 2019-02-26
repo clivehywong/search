@@ -358,12 +358,15 @@
     <div class="container">
         <div class="right">
             <input id="SearchString" style="width:100%" type="text" /> 
+            <a id="pubmedurl" class="button" href="" target="search" onclick="updatePubmedURL();"> Pubmed </a>
+			<a id="googleurl" class="button" href="" target="search" onclick="updateGoogleURL();"> Google </a>
+
 			From: <input id="YearFm" type="text" style="width:40px" /> To: <input id="YearTo" type="text" style="width:40px" /> 
 			<button onclick="year5()">5yrs</button>
 			<button onclick="year10()">10yrs</button>
 			<button onclick="yearminus5()">-5yrs</button>
 			<button onclick="yearclear()">clear</button>
-			<input type="checkbox" id="google" />Search Google
+			<input type="checkbox" id="google" />Google
 			<input type="checkbox" id="inframe" />Frame
             <div id="searchterms"></div>
 			<div style="clear:both"> 
@@ -385,8 +388,6 @@
 				
 				<!-- button onclick="searchInNewWindow()">Search in New Window</button -->
 				<!-- button onclick="searchInFrame()">Search in Frame</button -->
-				<a id="pubmedurl" class="button" href="" target="search" onclick="updatePubmedURL();"> Pubmed </a>
-				<a id="googleurl" class="button" href="" target="search" onclick="updateGoogleURL();"> Google </a>
 				<span class="buttonsep"> In Frame: </span>
 				<a href="#" class="button" onclick="googleInFrame()"> [Google] </button>
 				<a href="#" class="button" onclick="pubmedInFrame()"> [Pubmed] </button>
