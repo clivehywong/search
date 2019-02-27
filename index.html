@@ -65,7 +65,7 @@
 <script>
         
     function searchStringPubmed() {
-        var arrChecks = document.getElementsByName("theCheckbox");
+        var searchJournals = document.getElementsByName("theJournal");
         var searchTerms = document.getElementsByName("theSearchTerms");
         var searchphrase = document.getElementById("SearchString").value;
 		
@@ -82,9 +82,9 @@
             }
         }
 		orterm=""
-        for (i = 0; i < arrChecks.length; i++)         {
-            if (arrChecks[i].checked) {
-                journalphrase = journalphrase + orterm + "%22" + arrChecks[i].getAttribute('value') + "%22[jour]";
+        for (i = 0; i < searchJournals.length; i++)         {
+            if (searchJournals[i].checked) {
+                journalphrase = journalphrase + orterm + "%22" + searchJournals[i].getAttribute('value') + "%22[jour]";
 				orterm = "%20OR%20";
             }
         }
@@ -115,7 +115,7 @@
     }
 	
     function searchStringGoogle() {
-        var arrChecks = document.getElementsByName("theCheckbox");
+        var searchJournals = document.getElementsByName("theJournal");
         var searchTerms = document.getElementsByName("theSearchTerms");
         var searchphrase = document.getElementById("SearchString").value;
 		
@@ -136,10 +136,10 @@
             else searchphrase = searchtermphrase;
         }
 
-        for (i = 0; i < arrChecks.length; i++)         {
-            if (arrChecks[i].checked) {
-                if (journalphrase.length > 0) journalphrase = journalphrase + " OR source:%22" + arrChecks[i].getAttribute('value') + "%22";
-                else journalphrase = "source:%22" + arrChecks[i].getAttribute('value') + "%22";
+        for (i = 0; i < searchJournals.length; i++)         {
+            if (searchJournals[i].checked) {
+                if (journalphrase.length > 0) journalphrase = journalphrase + " OR source:%22" + searchJournals[i].getAttribute('value') + "%22";
+                else journalphrase = "source:%22" + searchJournals[i].getAttribute('value') + "%22";
             }
         }
         
@@ -187,7 +187,7 @@
         document.getElementById("pubmed").src = searchString();
     }
 	
-    function searchOne(s) {
+    function searchOneJournal(s) {
         var ss = document.getElementById("SearchString").value;
         var searchTerms = document.getElementsByName("theSearchTerms");
 		
@@ -217,25 +217,63 @@
 			s.href = ss;
 		}
     }
+    	
+    function searchOneTerm(s) {
+        var ss = document.getElementById("SearchString").value;
+        var searchJournals = document.getElementsByName("theJournal");
+        var journalstring = "";
+		
+		if (document.getElementById("google").checked) {
+			for (i = 0; i < searchTerms.length; i++) {
+				if (searchTerms[i].checked) ss = ss + " AND " + searchTerms[i].getAttribute('value') ;
+			}
+			ylo=""; yhi="";
+			if (document.getElementById("YearFm").value.length > 1) ylo = "&as_ylo="+document.getElementById("YearFm").value;
+			if (document.getElementById("YearTo").value.length > 1) yhi = "&as_yhi="+document.getElementById("YearTo").value;
+			ss="https://scholar.google.com.hk/scholar?as_q=" + ss + " AND source:%22" + s.id +"%22" + ylo + yhi + "&hl=en&as_sdt=0%2C5";
+		}
+		else {
+			if (ss.length < 1)  ss = "https://www.ncbi.nlm.nih.gov/pubmed/?term=";
+			else ss = "https://www.ncbi.nlm.nih.gov/pubmed/?term=" + ss + " AND ";
+			for (i = 0; i < searchJournals.length; i++) {
+				if (searchJournals[i].checked) {
+                    if (journalstring.length > 1) journalstring = journalstring + " OR " + searchJournals[i].getAttribute('value') + "[jour]";
+                    else journalstring = searchJournals[i].getAttribute('value') + "[jour]";
+                }
+			}
+			ss = ss + s.innerHTML + " AND " +journalstring;
+		}
+		
+		if ( document.getElementById("inframe").checked ) {
+			document.getElementById("pubmed").src = ss;
+			return false;
+		} else {
+			s.target="search";
+			s.href = ss;
+		}
+    }
 
     function makeJournalCheckboxes(str) {
         var a = document.getElementById("journals");
         var arr = str;
         var returnStr = "";
-        for (i = 0; i < arr.length; i++) returnStr += '<div class="journal" ><input type="checkbox" name="theCheckbox" value="' + arr[i] + '" />' + '<a href="#" id="'+arr[i]+'" onclick="return searchOne(this);return false;">' + arr[i] + '</a> </div>';
+        for (i = 0; i < arr.length; i++) returnStr += '<div class="journal" ><input type="checkbox" name="theJournal" value="' + arr[i] + '" />' + '<a href="#" id="'+arr[i]+'" onclick="return searchOneJournal(this);return false;">' + arr[i] + '</a> </div>';
         a.innerHTML = returnStr;
-        var arrChecks = document.getElementsByName("theCheckbox");
-        for (i = 0; i < arrChecks.length; i++)         {
-            arrChecks[i].checked=true;
+        var searchJournals = document.getElementsByName("theJournal");
+        for (i = 0; i < searchJournals.length; i++)         {
+            searchJournals[i].checked=true;
         }
-
     }
 
     function makeSearchTermCheckboxes(str) {
         var a = document.getElementById("searchterms");
         var arr = str;
         var returnStr = "";
-        for (i = 0; i < arr.length; i++) returnStr += '<div class="searchterms"> <input type="checkbox" name="theSearchTerms" value="' + arr[i].replace(/"/g, '%22') + '" />' + arr[i] + '</a> </div>';
+        for (i = 0; i < arr.length; i++) 
+            returnStr += '<div class="searchterms">' + 
+                '<input type="checkbox" name="theSearchTerms" value="' + arr[i].replace(/"/g, '%22') + '" />' + 
+                '<a href="#" id="'+arr[i].replace(/"/g, '%22')+'" onclick="return searchOneTerm(this);return false;">' +arr[i] + '</a>' + 
+                '</div>';
         a.innerHTML = returnStr;
     }
 
@@ -288,13 +326,13 @@
     };
 	
 	function checkall() {
-		var arrChecks = document.getElementsByName("theCheckbox");
-		for (i = 0; i < arrChecks.length; i++) arrChecks[i].checked = true;
+		var searchJournals = document.getElementsByName("theJournal");
+		for (i = 0; i < searchJournals.length; i++) searchJournals[i].checked = true;
 	}
 
 	function checknone() {
-		var arrChecks = document.getElementsByName("theCheckbox");
-		for (i = 0; i < arrChecks.length; i++) arrChecks[i].checked = false;
+		var searchJournals = document.getElementsByName("theJournal");
+		for (i = 0; i < searchJournals.length; i++) searchJournals[i].checked = false;
 	}
 
 	function year5() {
