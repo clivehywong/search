@@ -184,9 +184,9 @@
 		document.getElementById("pubmedurl").href = searchString();
 	}
 
-	function updateGoogleURL() {
+	function updateGoogleURL(s) {
 		document.getElementById("google").checked = true;
-		document.getElementById("googleurl").href = searchString();
+		s.href = searchString();
 	}
 
     function googleInFrame() {
@@ -428,9 +428,9 @@
         <div class="right">
             <input id="SearchString" style="width:100%" type="text" />
             <div style="height:22px; width:100%; margin-top:8px">
-                <a id="pubmedurl" class="button" href="" target="search" onclick="updatePubmedURL();"> Pubmed </a>
-                <a id="googleurl" class="button" href="" target="search" onclick="updateGoogleURL();"> Google </a>
-                <a href="#"  class="button" onclick="checknone(); updatePubmedURL();">X</a>
+                <a id="pubmedurl" class="button" href="" target="search" onclick="updatePubmedURL(this);"> Pubmed </a>
+                <a id="googleurl" class="button" href="" target="search" onclick="updateGoogleURL(this);"> Google </a>
+                <a href="#"  class="button" target="search" onclick="checknone(); updatePubmedURL(this);">X</a>
                 <span id="JournalLinks"></span>
             </div>
             <div>
