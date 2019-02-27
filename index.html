@@ -135,7 +135,6 @@
             else searchphrase = searchtermphrase;
         }
 
-        for (i = 0; i < searchJournals.length; i++)         {
         for (i = 0; i < searchJournals.length; i++) {
             if (searchJournals[i].checked) {
                 if (journalphrase.length > 0) journalphrase = journalphrase + " OR source:%22" + searchJournals[i].getAttribute('value') + "%22";
