@@ -50,6 +50,17 @@
     font-weight: bold;
 }
 
+.JournalSet {
+    display: block; float: left;
+    height: 14px;
+    background: #4292f4;
+    padding: 5px;
+    text-align: center;
+    border-radius: 2px;
+	margin-right: 2px;
+    color: white;
+    font-weight: bold;
+}
 .buttonsep {
     display: block; float: left;
     width: 80px;
@@ -392,7 +403,7 @@
         
         var a = document.getElementById("JournalLinks");
         var returnStr = "";
-        for (i = 0; i < journalset.length; i++) returnStr += '<a href="#" onclick="searchJournalSet(this)">' +journalset[i]+ '</button>';
+        for (i = 0; i < journalset.length; i++) returnStr += '<a class="JournalSet" href="#" onclick="searchJournalSet(this)" target="search" >' +journalset[i]+ '</button>';
         a.innerHTML = returnStr ;
 
 	}
