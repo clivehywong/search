@@ -13,9 +13,9 @@ Br Med J
 Annu Rev Psychol
 J Stat Softw
 Psychol Sci Public Interest
-LANCET
 
 #IF10+
+LANCET
 JAMA
 Nature
 Science
