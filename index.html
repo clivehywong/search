@@ -415,6 +415,7 @@
             if (/^[# ]/.test(outstr[i])) {
                 label=outstr[i].substring(1,outstr[i].length);
                 journals[label]=[];
+                journalset.push(label);
             } else {
                 journals[label].push(outstr[i]);
             }
@@ -423,12 +424,15 @@
 	}
 
     window.onload = function () {
-        var jarr = ["LANCET","JAMA","Nature","Science","Nat Rev Neurosci","Nat Med","World Psychiatry","Lancet Neurol","Psychol Inq","Physiol Rev","Br Med J","Annu Rev Psychol","J Stat Softw","Psychol Sci Public Interest"];
-        makeJournalCheckboxes(jarr);
-
         // makeSearchTermCheckboxes(sarr);
         makeSearchTermCheckboxes(loadterm("./terms.txt"));
         loadjournal("./journals.txt");
+        // var jarr = ["LANCET","JAMA","Nature","Science","Nat Rev Neurosci","Nat Med","World Psychiatry","Lancet Neurol","Psychol Inq","Physiol Rev","Br Med J","Annu Rev Psychol","J Stat Softw","Psychol Sci Public Interest"];
+        // makeJournalCheckboxes(jarr);
+        
+        makeJournalCheckboxes(journals[journalset[0]]);
+
+
         document.getElementById("SearchString").focus();
 	};
 
