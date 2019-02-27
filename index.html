@@ -299,6 +299,11 @@
         makeJournalCheckboxes(journals[s.id]);
     }
 	
+    function searchJournalSet(s) {
+        makeJournalCheckboxes(journals[s.innerHTML]);
+        s.href = searchString();
+    }
+	
 	function checkall() {
 		var searchJournals = document.getElementsByName("theJournal");
 		for (i = 0; i < searchJournals.length; i++) searchJournals[i].checked = true;
@@ -384,6 +389,12 @@
         var returnStr = "";
         for (i = 0; i < journalset.length; i++) returnStr += '<button id=' + journalset[i] + ' onclick="loadJournal(this)">' +journalset[i]+ '</button>';
         a.innerHTML = returnStr ;
+        
+        var a = document.getElementById("JournalLinks");
+        var returnStr = "";
+        for (i = 0; i < journalset.length; i++) returnStr += '<a href="#" onclick="searchJournalSet(this)">' +journalset[i]+ '</button>';
+        a.innerHTML = returnStr ;
+
 	}
 
     window.onload = function () {
@@ -418,9 +429,8 @@
 			<input type="checkbox" id="inframe" />Frame
             <div id="searchterms"></div>
 			<div style="clear:both"> 
-				IF:
-                <span id="JournalButtons"></span>
-				Selection: 
+                <div id="JournalButtons"></div>
+				<div id="JournalLinks"></div>
 				<button onclick="checkall()">All</button>
 				<button onclick="checknone()">None</button>
 			</div>
