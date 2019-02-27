@@ -409,7 +409,10 @@
         
         label="Default"
         for (i = 0; i < outstr.length; i++) {
-            if (outstr[i].startsWith("#")) label=outstr[i].substring(1,outstr[i].length);
+            if (outstr[i].startsWith("#")) {
+                label=outstr[i].substring(1,outstr[i].length);
+                alert(label);
+            }
         }
 		return outstr.filter(function(e1){ return ! /^[# ]/.test(e1); });
 	}
