@@ -424,11 +424,13 @@
 
     <div class="container">
         <div class="right">
-            <div>
-                <input id="SearchString" style="width:100%" type="text" />
+            <input id="SearchString" style="width:100%" type="text" />
+            <div style="height:22px; width:100%; margin-top:8px">
                 <a id="pubmedurl" class="button" href="" target="search" onclick="updatePubmedURL();"> Pubmed </a>
                 <a id="googleurl" class="button" href="" target="search" onclick="updateGoogleURL();"> Google </a>
-                <div id="JournalLinks"></div>
+                <span id="JournalLinks"></span>
+            </div>
+            <div>
                 From: <input id="YearFm" type="text" style="width:40px" /> To: <input id="YearTo" type="text" style="width:40px" /> 
                 <button onclick="year5()">5yrs</button>
                 <button onclick="year10()">10yrs</button>
