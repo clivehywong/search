@@ -241,7 +241,8 @@
                     else journalstring = searchJournals[i].getAttribute('value') + "[jour]";
                 }
 			}
-			ss = ss + s.innerHTML + " AND (" +journalstring +")";
+			ss = ss + s.innerHTML;
+            if (journalstring.length > 1) ss = ss+ + " AND (" +journalstring +")";
 		}
 		
 		if ( document.getElementById("inframe").checked ) {
