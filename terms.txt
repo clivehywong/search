@@ -1,3 +1,5 @@
+(("Vermis" OR "Vermian") AND ("VII" OR "Folium" OR "Tuber")
+(("Vermis" OR "Vermian") AND ("VI" OR "Declive")
 ("processing speed")
 ("reaction time" OR "response time")
 (faster OR slower OR shorter OR longer OR reduced OR increased OR speed OR decreased)
