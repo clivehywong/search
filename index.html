@@ -65,6 +65,7 @@
 <script>
     
     var journals = [];
+    var journalset = [];
         
     function searchStringPubmed() {
         var searchJournals = document.getElementsByName("theJournal");
@@ -414,7 +415,6 @@
             if (/^[# ]/.test(outstr[i])) {
                 label=outstr[i].substring(1,outstr[i].length);
                 journals[label]=[];
-                alert(label);
             } else {
                 journals[label].push(outstr[i]);
             }
@@ -423,13 +423,13 @@
 	}
 
     window.onload = function () {
-	var jarr = ["LANCET","JAMA","Nature","Science","Nat Rev Neurosci","Nat Med","World Psychiatry","Lancet Neurol","Psychol Inq","Physiol Rev","Br Med J","Annu Rev Psychol","J Stat Softw","Psychol Sci Public Interest"];
-	makeJournalCheckboxes(jarr);
+        var jarr = ["LANCET","JAMA","Nature","Science","Nat Rev Neurosci","Nat Med","World Psychiatry","Lancet Neurol","Psychol Inq","Physiol Rev","Br Med J","Annu Rev Psychol","J Stat Softw","Psychol Sci Public Interest"];
+        makeJournalCheckboxes(jarr);
 
-	// makeSearchTermCheckboxes(sarr);
-	makeSearchTermCheckboxes(loadterm("./terms.txt"));
-    loadjournal("./journals.txt");
-	document.getElementById("SearchString").focus();
+        // makeSearchTermCheckboxes(sarr);
+        makeSearchTermCheckboxes(loadterm("./terms.txt"));
+        loadjournal("./journals.txt");
+        document.getElementById("SearchString").focus();
 	};
 
 
