@@ -55,7 +55,7 @@ Trends Endocrinol Metab
 Trends Genet
 Ann Neurol
 
-IF10-20
+#IF10-20
 Nat Neurosci
 Nat Rev Neurol
 Sci Transl Med
@@ -82,7 +82,7 @@ Trends Endocrinol Metab
 Trends Genet
 Ann Neurol
 
-IF7+
+#IF7+
 LANCET
 JAMA
 Nature
@@ -122,34 +122,6 @@ JAMA Pediatr
 Trends Endocrinol Metab
 Trends Genet
 Ann Neurol
- Clin Psychol Rev
-Proc Natl Acad Sci U S A
-Neuro Oncol
-Epilepsy Curr
-Perspect Psychol Sci
-Pers Soc Psychol Rev
-Curr Biol
-PLoS Biol
-BMC Med
-Ageing Res Rev
-Adv Exp Soc Psychol
-Annu Rev Biomed Eng
-Health Psychol Rev
-Mov Disord
-Transl Stroke Res
-Rev Educ Res
-Neurosci Biobehav Rev
-Cell Rep
-Aging Cell
-eLife
-Neurology
-NEUROSCIENTIST
-Gigascience
-Psychol Rev
-J Neurol Neurosurg Psychiatry
-Eur J Epidemiol
-
-IF7-10
 Clin Psychol Rev
 Proc Natl Acad Sci U S A
 Neuro Oncol
@@ -177,7 +149,35 @@ Psychol Rev
 J Neurol Neurosurg Psychiatry
 Eur J Epidemiol
 
-IF5-7
+#IF7-10
+Clin Psychol Rev
+Proc Natl Acad Sci U S A
+Neuro Oncol
+Epilepsy Curr
+Perspect Psychol Sci
+Pers Soc Psychol Rev
+Curr Biol
+PLoS Biol
+BMC Med
+Ageing Res Rev
+Adv Exp Soc Psychol
+Annu Rev Biomed Eng
+Health Psychol Rev
+Mov Disord
+Transl Stroke Res
+Rev Educ Res
+Neurosci Biobehav Rev
+Cell Rep
+Aging Cell
+eLife
+Neurology
+NEUROSCIENTIST
+Gigascience
+Psychol Rev
+J Neurol Neurosurg Psychiatry
+Eur J Epidemiol
+
+#IF5-7
 Schizophr Bull
 Neuropsychopharmacology
 Curr Opin Neurobiol
@@ -222,7 +222,7 @@ Alzheimers Res Ther
 J Clin Child Adolesc Psychol
 J Neurotrauma
 
-IF5+
+#IF5+
 LANCET
 JAMA
 Nature
@@ -288,7 +288,7 @@ Gigascience
 Psychol Rev
 J Neurol Neurosurg Psychiatry
 Eur J Epidemiol
- Schizophr Bull
+Schizophr Bull
 Neuropsychopharmacology
 Curr Opin Neurobiol
 J Child Psychol Psychiatry
