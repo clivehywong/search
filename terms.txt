@@ -15,3 +15,5 @@
 (stroke OR poststroke)
 ("motor imagery")
 ("motor repertoire")
+("cerebellar frontal" OR "cerebello-frontal" OR "cerebello-cortical")
+("frontocerebellar" OR "fronto-cerebellar")
