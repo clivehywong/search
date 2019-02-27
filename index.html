@@ -342,6 +342,10 @@
         makeJournalCheckboxes(arrt);
         document.getElementById("SearchString").focus();
     };
+    
+    function loadJournal(s) {
+        makeJournalCheckboxes(journals[s.id]);
+    }
 	
 	function checkall() {
 		var searchJournals = document.getElementsByName("theJournal");
@@ -399,6 +403,7 @@
 	function loadjournal(file){
 		var rawFile = new XMLHttpRequest();
         var outstr;
+                
 		rawFile.open("GET", file, false);
 		rawFile.onreadystatechange = function () {
 		    if(rawFile.readyState == 4)  {
@@ -412,15 +417,21 @@
         
         label="Default"
         for (i = 0; i < outstr.length; i++) {
-            if (/^[# ]/.test(outstr[i])) {
+            if (outstr[i].length==0) continue;
+            else if (/^[#]/.test(outstr[i])) {
                 label=outstr[i].substring(1,outstr[i].length);
                 journals[label]=[];
                 journalset.push(label);
+                
             } else {
                 journals[label].push(outstr[i]);
             }
         }
-		return outstr.filter(function(e1){ return ! /^[# ]/.test(e1); });
+        
+        var a = document.getElementById("JournalButtons");
+        var returnStr = "";
+        for (i = 0; i < journalset.length; i++) returnStr += '<button id=' + journalset[i] + ' onclick="loadJournal(this)">' +journalset[i]+ '</button>';
+        a.innerHTML = returnStr ;
 	}
 
     window.onload = function () {
@@ -431,7 +442,6 @@
         // makeJournalCheckboxes(jarr);
         
         makeJournalCheckboxes(journals[journalset[0]]);
-
 
         document.getElementById("SearchString").focus();
 	};
@@ -457,13 +467,14 @@
             <div id="searchterms"></div>
 			<div style="clear:both"> 
 				IF:
-				<button onclick="loadIF20()">20+</button>
+                <span id="JournalButtons"></span>
+				<!-- button onclick="loadIF20()">20+</button>
 				<button onclick="loadIF10()">10+</button>
 				<button onclick="loadIF07()">7+</button>
 				<button onclick="loadIF05()">5+</button>
 				<button onclick="loadIF1020()">10-20</button>
 				<button onclick="loadIF0710()">7-10</button>
-				<button onclick="loadIF0507()">5-7</button>
+				<button onclick="loadIF0507()">5-7</button-->
 				Selection: 
 				<button onclick="checkall()">All</button>
 				<button onclick="checknone()">None</button>
