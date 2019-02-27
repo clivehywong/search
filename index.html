@@ -136,6 +136,7 @@
         }
 
         for (i = 0; i < searchJournals.length; i++)         {
+        for (i = 0; i < searchJournals.length; i++) {
             if (searchJournals[i].checked) {
                 if (journalphrase.length > 0) journalphrase = journalphrase + " OR source:%22" + searchJournals[i].getAttribute('value') + "%22";
                 else journalphrase = "source:%22" + searchJournals[i].getAttribute('value') + "%22";
@@ -393,6 +394,27 @@
 		return outstr.filter(function(e1){ return ! /^[# ]/.test(e1); });
 	}
 
+	function loadjournal(file){
+		var rawFile = new XMLHttpRequest();
+        var outstr;
+		rawFile.open("GET", file, false);
+		rawFile.onreadystatechange = function () {
+		    if(rawFile.readyState == 4)  {
+                if(rawFile.status == 200 || rawFile.status == 0) {
+                    var allText = rawFile.responseText;
+                    outstr=allText.split(/\n/);
+                }
+		    }
+		}
+		rawFile.send(null);
+        
+        label="Default"
+        for (i = 0; i < outstr.length; i++) {
+            if (outstr[i].startsWith("#")) label=outstr[i].substring(1,outstr[i].length);
+        }
+		return outstr.filter(function(e1){ return ! /^[# ]/.test(e1); });
+	}
+
     window.onload = function () {
 	var jarr = ["LANCET","JAMA","Nature","Science","Nat Rev Neurosci","Nat Med","World Psychiatry","Lancet Neurol","Psychol Inq","Physiol Rev","Br Med J","Annu Rev Psychol","J Stat Softw","Psychol Sci Public Interest"];
 	makeJournalCheckboxes(jarr);
@@ -400,6 +422,7 @@
 	// makeSearchTermCheckboxes(sarr);
 	makeSearchTermCheckboxes(loadterm("./terms.txt"));
 	    
+    loadjournal("./journals.txt");
 	document.getElementById("SearchString").focus();
 	};
 
