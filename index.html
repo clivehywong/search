@@ -63,6 +63,8 @@
 </style>
 
 <script>
+    
+    var journals = [];
         
     function searchStringPubmed() {
         var searchJournals = document.getElementsByName("theJournal");
@@ -409,9 +411,12 @@
         
         label="Default"
         for (i = 0; i < outstr.length; i++) {
-            if (outstr[i].startsWith("#")) {
+            if (/^[# ]/.test(outstr[i])) {
                 label=outstr[i].substring(1,outstr[i].length);
+                journals[label]=[];
                 alert(label);
+            } else {
+                journals[label].push(outstr[i]);
             }
         }
 		return outstr.filter(function(e1){ return ! /^[# ]/.test(e1); });
