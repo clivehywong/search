@@ -238,7 +238,7 @@
 			ss="https://scholar.google.com.hk/scholar?as_q=" + ss + " AND source:%22" + s.id +"%22" + ylo + yhi + "&hl=en&as_sdt=0%2C5";
 		}
 		else {
-    		alert("hi");
+    		alert("1:"+ss);
 			if (ss.length < 1)  ss = "https://www.ncbi.nlm.nih.gov/pubmed/?term=";
 			else ss = "https://www.ncbi.nlm.nih.gov/pubmed/?term=" + ss + " AND ";
             alert("hi");
@@ -248,7 +248,7 @@
                     else journalstring = searchJournals[i].getAttribute('value') + "[jour]";
                 }
 			}
-            alert("hi");
+            alert("2:"+ss);
 			ss = ss + s.innerHTML;
             if (journalstring.length > 1) ss = ss + " AND (" +journalstring +")";
             if ( document.getElementById("YearFm").value.length > 1 ) yearphrase = document.getElementById("YearFm").value; 
@@ -258,7 +258,7 @@
                 else ss = yearphrase + "[dp]";
             }
 		}
-		alert("hi");
+		alert("3:"+ss);
 		if ( document.getElementById("inframe").checked ) {
 			document.getElementById("pubmed").src = ss;
 			return false;
