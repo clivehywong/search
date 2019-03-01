@@ -4,6 +4,7 @@
 (("Vermis" OR "Vermian") AND ("VI" OR "Declive"))
 (fMRI OR "functional imaging" OR "functional MRI")
 (activation)
+(("Multivariate" OR "multivoxel" OR "multi-voxel") AND "pattern analysis")
 (plasticity)
 ("processing speed" OR "speed of information processing")
 ("mental speed")
