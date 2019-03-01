@@ -1,6 +1,6 @@
 (Cerebellum)
 ("vermis" OR "vermal" OR "midline cerebell*" OR "medial cerebell*")
-(("Vermis" OR "Vermian") AND ("VII" OR "Folium" OR "Tuber"))
+(("Vermis" OR "Vermian") AND ("VII" OR "Folium" OR "Tuber" OR "Crus"))
 (("Vermis" OR "Vermian") AND ("VI" OR "Declive"))
 (fMRI OR "functional imaging" OR "functional MRI")
 (activation)
