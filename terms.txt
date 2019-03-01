@@ -2,6 +2,7 @@
 ("vermis" OR "vermal" OR "midline cerebell*" OR "medial cerebell*")
 (("Vermis" OR "Vermian") AND ("VII" OR "Folium" OR "Tuber" OR "Crus"))
 (("Vermis" OR "Vermian") AND ("VI" OR "Declive"))
+("supplementary motor area" OR "medial prefrontal" OR "medial frontal")
 (fMRI OR "functional imaging" OR "functional MRI")
 (activation)
 (("Multivariate" OR "multivoxel" OR "multi-voxel") AND "pattern analysis")
