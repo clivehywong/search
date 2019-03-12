@@ -1,13 +1,13 @@
 # Speed Constructs
 ("processing speed" OR "speed of information processing")
-("mental speed")
+("mental speed" OR "decision speed")
 ("reaction time" OR "response time")
 (faster OR slower OR shorter OR longer OR reduced OR increased OR speed OR decreased)
 (plasticity)
 (pursuit)
 (pursuit AND (cognition OR cognitive))
 # Speed Tasks
-("stimulus-response compatibility" OR "choice RT" OR "choice reaction time")
+("stimulus-response compatibility" OR "choice RT" OR "choice reaction time" OR "response selection")
 ("digit-symbol" OR "digit symbol" OR "symbol digit" OR "DSST" OR "DSVT" OR "SDMT")
 ("substitution test" OR "substitution task")
 (aging OR older OR ageing OR elderly)
