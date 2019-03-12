@@ -6,7 +6,7 @@
 }
 
 .right {
-    width: 600px;
+    width: 450px;
    height: 100%;
     float: right;
     background: #aafed6;
@@ -25,11 +25,11 @@
 }
 
 .journal {
-	display: block;	float:left; clear: none; width: 190px; height:16px; font-size:11px; overflow: hidden;
+	display: block;	float:left; clear: none; width: 145px; height:16px; font-size:11px; overflow: hidden;
 }
 
 .searchterms {
-	display: block;	float:left; clear: none; width: 290px; height:16px; font-size:11px; overflow: hidden;
+	display: block;	float:left; clear: none; width: 220px; height:16px; font-size:11px; overflow: hidden;
 }
 
 .pubmed {
@@ -38,6 +38,7 @@
 }
 
 .button {
+    display: inline-block;
     height: 12px;
     font-size:11px; 
     background: #4292f4;
@@ -45,11 +46,14 @@
     text-align: center;
     border-radius: 6px;
 	margin-right: 2px;
+    margin-bottom: 0px;
+    margin-top: 1px;
     color: white;
     font-weight: bold;
 }
 
 .JournalSet {
+    display: inline-block;
     height: 12px;
     font-size:11px; 
     background: #4292f4;
@@ -57,6 +61,8 @@
     text-align: center;
     border-radius: 6px;
 	margin-right: 2px;
+    
+    margin-bottom: 8px;
     color: white;
     font-weight: bold;
 }
@@ -299,11 +305,26 @@
         var a = document.getElementById("searchterms");
         var arr = str;
         var returnStr = "";
-        for (i = 0; i < arr.length; i++) 
-            returnStr += '<div class="searchterms">' + 
+        var section = 0;
+        var box = 0
+        var div = '<div class="searchterms" style="background-color:yellow">';
+        for (i = 0; i < arr.length; i++) {
+            if (arr[i].startsWith("#")) {
+                if ( box % 2 == 1 ) {
+                    returnStr += div + '</div>';
+                    box += 1;
+                }
+                if ( section % 2 == 1 ) div = '<div class="searchterms" style="background-color:cyan">';
+                else div = '<div class="searchterms" style="background-color:yellow">';
+                returnStr += div + arr[i] + '</div>';
+                section += 1;
+            }
+            else returnStr += div + 
                 '<input type="checkbox" name="theSearchTerms" value="' + arr[i].replace(/"/g, '%22') + '" />' + 
                 '<a href="#" id="'+arr[i].replace(/"/g, '%22')+'" onclick="return searchOneTerm(this);return false;">' +arr[i] + '</a>' + 
                 '</div>';
+            box += 1;
+        }
         a.innerHTML = returnStr;
     }
     
@@ -366,7 +387,8 @@
 		}
 		rawFile.send(null);
         
-		return outstr.filter(function(e1){ return ! /^[# ]/.test(e1); });
+		// return outstr.filter(function(e1){ return ! /^[# ]/.test(e1); });
+        return outstr;
 	}
 
 	function loadjournal(file){
@@ -404,7 +426,7 @@
         
         var a = document.getElementById("JournalLinks");
         var returnStr = "";
-        for (i = 0; i < journalset.length; i++) returnStr += '<a class="JournalSet" href="#" onclick="searchJournalSet(this)" target="search" >' +journalset[i]+ '</button>';
+        for (i = 0; i < journalset.length; i++) returnStr += '<a class="button" href="#" onclick="searchJournalSet(this)" target="search" >' +journalset[i]+ '</button>';
         a.innerHTML = returnStr ;
 
 	}
@@ -428,21 +450,19 @@
 
     <div class="container">
         <div class="right">
-            <input id="SearchString" style="width:100%" type="text" />
-            <div style="height:22px; width:100%; margin-top:8px">
-                <a id="pubmedurl" class="button" href="" target="search" onclick="updatePubmedURL(this);">Pubmed</a>
-                <a href="#"  class="button" target="search" onclick="checknone(); updatePubmedURL(this);">No filter</a>
-                <span id="JournalLinks"></span>
-                <a id="googleurl" class="button" href="" target="search" onclick="updateGoogleURL(this);">Google</a>
+            <input id="SearchString" style="width:100%; height:25px; margin-bottom:0px" type="text" />
+            <div style="width:100%; margin-top:2px">
+                <a id="pubmedurl" class="button" href="#" target="search" onclick="updatePubmedURL(this);">PM</a
+                ><a href="#"  class="button" target="search" onclick="checknone(); updatePubmedURL(this);">No filter</a
+                ><span id="JournalLinks"></span><a id="googleurl" class="button" href="" target="search" onclick="updateGoogleURL(this);">Google</a>
             </div>
             <div>
-                From: <input id="YearFm" type="text" style="width:40px" /> To: <input id="YearTo" type="text" style="width:40px" /> 
-                <button onclick="year5()">5yrs</button>
-                <button onclick="year10()">10yrs</button>
-                <button onclick="yearminus5()">-5yrs</button>
-                <button onclick="yearclear()">clear</button>
-                <input type="checkbox" id="google" />Google
-                <input type="checkbox" id="inframe" />Frame
+                From:<input id="YearFm" type="text" style="width:30px" />To:<input id="YearTo" type="text" style="width:30px"
+                ><button onclick="year5()">5yrs</button
+                ><button onclick="year10()">10yrs</button
+                ><button onclick="yearminus5()">-5yrs</button
+                ><button onclick="yearclear()">clear</button
+                ><input type="checkbox" id="google" />Google<input type="checkbox" id="inframe" />Frame
             </div>
 
             <div class=sep> &nbsp; </div>
