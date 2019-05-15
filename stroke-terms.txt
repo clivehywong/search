@@ -1,0 +1,18 @@
+# Stroke Task
+(stroke OR poststroke)
+("motor imagery" OR "mental imagery")
+("motor imagery")
+("mental imagery")
+("vividness")
+("expertise" OR "elite" OR "novice")
+("experience")
+("motor repertoire")
+("motor schema" OR "action schema")
+# Neuro
+(fMRI OR "functional imaging" OR "functional MRI")
+(activation)
+(("Multivariate" OR "multivoxel" OR "multi-voxel") AND "pattern analysis")
+# Stats
+(associated OR correlated OR "neural correlates")
+(regression OR "linear model")
+(residual OR residualization)
