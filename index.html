@@ -223,7 +223,6 @@
 			ss="https://scholar.google.com.hk/scholar?as_q=" + ss + " AND source:%22" + s.id +"%22" + ylo + yhi + "&hl=en&as_sdt=0%2C5";
 		}
 		else {
-            alert("test");
 			if (ss.length < 1)  ss = "https://www.ncbi.nlm.nih.gov/pubmed/?term=";
 			else ss = "https://www.ncbi.nlm.nih.gov/pubmed/?term=" + ss + "%20AND%20";
 			for (i = 0; i < searchTerms.length; i++) {
@@ -296,7 +295,7 @@
         var a = document.getElementById("journals");
         var arr = str;
         var returnStr = "";
-        for (i = 0; i < arr.length; i++) returnStr += '<div class="journal" ><input type="checkbox" name="theJournal" value="' + arr[i] + '" />' + '<a href="#" id="'+arr[i]+'" onclick="return searchOneJournal(this);return false;">' + arr[i] + '</a> </div>';
+        for (i = 0; i < arr.length; i++) returnStr += '<div class="journal" ><input type="checkbox" name="theJournal" value="' + arr[i] + '" />' + '<a href="#" id="'+arr[i]+'" onclick="return searchOneJournal(this);">' + arr[i] + '</a> </div>';
         a.innerHTML = returnStr;
         var searchJournals = document.getElementsByName("theJournal");
         for (i = 0; i < searchJournals.length; i++)         {
